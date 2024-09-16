@@ -10,6 +10,7 @@ import {
   IconSunrise,
 } from '@tabler/icons-react'
 
+//在定义对象时，使用方括号 [] 是为了支持使用变量或表达式作为键名。这里 [SlotType.Bicycle] 表示使用 SlotType.Bicycle 变量的值作为键名。
 export const IconTypes = {
   [SlotType.Bicycle]: <IconBike className="w-6 h-6 " />,
   [SlotType.Bike]: <IconMotorbike className="w-6 h-6 " />,

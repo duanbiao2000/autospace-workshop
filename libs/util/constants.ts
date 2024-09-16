@@ -1,4 +1,4 @@
-import { LocationInfo } from './types'
+@import { LocationInfo } from './types'
 
 export const initialViewState = {
   latitude: 40.7128,
