@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
 import {
   IconPhotoCancel,
@@ -5,13 +6,15 @@ import {
   IconChevronRight,
 } from '@tabler/icons-react'
 
+// 定义自动图片切换组件的属性接口
 export interface IAutoImageChangerProps {
-  images: string[]
-  durationPerImage?: number
-  aspectRatio?: 'aspect-square' | 'aspect-video' | 'aspect-auto'
-  noAutoChange?: boolean
+  images: string[] // 要显示的图片数组
+  durationPerImage?: number // 每张图片显示的持续时间（毫秒），默认为5000毫秒
+  aspectRatio?: 'aspect-square' | 'aspect-video' | 'aspect-auto' // 图片的宽高比，默认为正方形
+  noAutoChange?: boolean // 是否禁用自动切换图片的功能，默认为否
 }
 
+// 自动图片切换组件
 export const AutoImageChanger = ({
   images,
   durationPerImage = 5000,
@@ -20,6 +23,7 @@ export const AutoImageChanger = ({
 }: IAutoImageChangerProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
+  // 设置定时器以自动切换图片
   useEffect(() => {
     if (noAutoChange) return
 
@@ -28,8 +32,9 @@ export const AutoImageChanger = ({
     }, durationPerImage)
 
     return () => clearInterval(interval)
-  }, [durationPerImage, images])
+  }, [durationPerImage, images, noAutoChange])
 
+  // 如果图片数组为空，显示提示信息
   if (images.length === 0)
     return (
       <div className="flex items-center justify-center w-full h-48 gap-2 text-sm bg-white border select-none border-gray-50 text-gray">
@@ -37,6 +42,7 @@ export const AutoImageChanger = ({
       </div>
     )
 
+  // 显示当前图片和图片指示器
   return (
     <div className={`relative w-full overflow-hidden ${aspectRatio}`}>
       <img
@@ -54,6 +60,7 @@ export const AutoImageChanger = ({
           />
         ))}
       </div>
+      // 显示图片切换按钮
       {images.length > 1 && (
         <>
           <button

@@ -26,19 +26,27 @@ export const SearchPage = () => {
   console.log('errors ', errors)
   const formData = watch()
 
-  const handleMapChange = useCallback(
-    (target: ViewStateChangeEvent['target']) => {
-      const bounds = target.getBounds()
-      const locationFilter = {
-        ne_lat: bounds?.getNorthEast().lat || 0,
-        ne_lng: bounds?.getNorthEast().lng || 0,
-        sw_lat: bounds?.getSouthWest().lat || 0,
-        sw_lng: bounds?.getSouthWest().lng || 0,
-      }
-      setValue('locationFilter', locationFilter)
-    },
-    [setValue],
-  )
+/**
+ * 使用 useCallback 避免不必要的渲染，当地图视图变化时处理位置过滤器的更新
+ * @param target 地图视图变化事件的目标，包含视图的边界信息
+ */
+const handleMapChange = useCallback(
+  (target: ViewStateChangeEvent['target']) => {
+    // 获取当前地图视图的边界
+    const bounds = target.getBounds()
+    // 根据地图视图的边界更新位置过滤器
+    const locationFilter = {
+      ne_lat: bounds?.getNorthEast().lat || 0,
+      ne_lng: bounds?.getNorthEast().lng || 0,
+      sw_lat: bounds?.getSouthWest().lat || 0,
+      sw_lng: bounds?.getSouthWest().lng || 0,
+    }
+    // 使用 setValue 函数更新表单的位置过滤器值
+    setValue('locationFilter', locationFilter)
+  },
+  // 依赖项数组，当 setValue 发生变化时，handleMapChange 函数将重新创建
+  [setValue],
+)
 
   return (
     <Map

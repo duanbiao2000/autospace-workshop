@@ -17,6 +17,7 @@ export const Reveal = ({
     <button
       className={`flex flex-col items-center gap-2 ${className}`}
       onClick={() => setRevealed((state) => !state)}
+      aria-pressed={revealed}  // 添加可访问性属性
     >
       <span
         className={`text-lg tracking-wider w-full border px-1 ${

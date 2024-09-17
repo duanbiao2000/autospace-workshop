@@ -15,7 +15,9 @@ import {
 } from '@autospace/network/src/gql/generated'
 import { toast } from '../molecules/Toast'
 
+// 组件定义
 export const AddValet = () => {
+  // 表单状态管理
   const {
     register,
     resetField,
@@ -25,24 +27,28 @@ export const AddValet = () => {
     handleSubmit,
     formState: { errors },
   } = useFormCreateValet()
+  
+  // 对话框状态
   const [open, setOpen] = useState(false)
   const { image } = watch()
 
+  // GraphQL 创建代客泊车员的操作
   const [createValet, { data, loading }] = useMutation(CreateValetDocument, {
     onCompleted() {
-      toast('Valet created.🎉')
-      reset()
-      setOpen(false)
+      toast('Valet created.🎉') // 成功提示
+      reset() // 重置表单
+      setOpen(false) // 关闭对话框
     },
     awaitRefetchQueries: true,
     refetchQueries: [namedOperations.Query.companyValets],
   })
 
+  // 图像上传处理
   const { uploading, upload } = useCloudinaryUpload()
 
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>Create Valet</Button>
+      <Button onClick={() => setOpen(true)}>Create Valet</Button> {/* 打开对话框按钮 */}
       <Dialog
         widthClassName="max-w-xl"
         open={open}
@@ -51,12 +57,13 @@ export const AddValet = () => {
       >
         <Form
           onSubmit={handleSubmit(async ({ image, ...data }) => {
-            const images = await upload(image)
+            const images = await upload(image) // 上传图像
             await createValet({
               variables: { createValetInput: { ...data, image: images[0] } },
             })
           })}
         >
+          {/* 表单字段 */}
           <HtmlLabel title="UID" error={errors.uid?.message}>
             <HtmlInput placeholder="uid of the valet" {...register('uid')} />
           </HtmlLabel>
