@@ -15,6 +15,8 @@ export const formSchemaCreateSlot = z.object({
   width: z.number(),
   length: z.number(),
   pricePerHour: z.number(),
+  // 定义一个名为count的字段，它是一个经过验证的数字类型
+  // 该字段的值必须大于或等于1，并且小于或等于10，以确保数据的合法性
   count: z.number().min(1).max(10, { message: 'Maximum 10.' }),
   type: z.nativeEnum(SlotType),
 })

@@ -1,13 +1,21 @@
+# 注册用户 mutation，使用credentials进行注册
 mutation RegisterWithCredentials(
+  # 注册所需的输入参数，不会为空
   $registerWithCredentialsInput: RegisterWithCredentialsInput!
 ) {
+  # 调用注册函数，传入包含所有必要注册信息的输入参数
   registerWithCredentials(
     registerWithCredentialsInput: $registerWithCredentialsInput
   ) {
+    # 返回更新的时间戳，以便客户端知道用户信息最近一次更新的时间
     updatedAt
+    # 返回用户的唯一标识符UID，用于唯一识别每个用户
     uid
+    # 返回用户的名字，用于展示在相关用户信息界面
     name
+    # 返回用户的头像链接或路径，用于展示用户的头像图片
     image
+    # 返回创建的时间戳，以便客户端知道用户账户创建的时间
     createdAt
   }
 }
